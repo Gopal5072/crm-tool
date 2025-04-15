@@ -1,3 +1,5 @@
+// app/register/page.jsx or wherever your register page is
+
 "use client";
 
 import { useState } from 'react';
@@ -11,12 +13,20 @@ const RegisterPage = () => {
     username: '',
     password: '',
     confirmPassword: '',
-    role: 'Sales', // Default role is 'Sales'
+    role: 'Sales',
+    founderCode: '',
   });
+
+  const [showFounderCode, setShowFounderCode] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    if (name === 'role') {
+      setShowFounderCode(value === 'Founder');
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -24,9 +34,7 @@ const RegisterPage = () => {
 
     try {
       const response = await axios.post('/api/auth/register', formData);
-
       if (response.status === 201) {
-        // Redirect to the login page after successful registration
         router.push('/login');
       }
     } catch (err) {
@@ -84,7 +92,24 @@ const RegisterPage = () => {
           <option value="Founder">Founder</option>
         </select>
         <br />
-        <button type="submit">Register</button>
+        {showFounderCode && (
+          <input
+            type="text"
+            name="founderCode"
+            placeholder="Enter Founder Secret Code"
+            onChange={handleChange}
+            value={formData.founderCode}
+            required
+            style={{
+              border: '1px solid black',
+              padding: '5px',
+              marginTop: '8px',
+              backgroundColor: '#f1f1f1',
+            }}
+          />
+        )}
+        <br />
+        <button type="submit" style={{ marginTop: '10px' }}>Register</button>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
