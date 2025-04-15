@@ -1,6 +1,6 @@
 // app/api/deals/route.js
-import { connectToDatabase } from '@lib/db';
-import Deal from '@models/Deal';
+import { connectToDatabase } from '../../../lib/db';
+import Deal from '../../../models/Deal';
 import { NextResponse } from 'next/server';
 
 export async function GET(req) {
