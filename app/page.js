@@ -1,5 +1,7 @@
 "use client";  // This tells Next.js to treat this as a client component
 
+
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { useRouter } from 'next/navigation';
 
 const HomePage = () => {
