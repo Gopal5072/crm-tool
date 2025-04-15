@@ -123,12 +123,11 @@ const DealForm = () => {
 
         <div>
           <button type="submit">Create Deal</button>
+          <button onClick={handleShowMyDeals}>Show My Deals</button>
         </div>
       </form>
 
       <br />
-
-      <button onClick={handleShowMyDeals}>Show My Deals</button>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
