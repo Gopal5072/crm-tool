@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@vercel/speed-insights": "^1.2.0",
     "axios": "^1.8.4",
     "bcryptjs": "^3.0.2",
     "jsonwebtoken": "^9.0.2",
