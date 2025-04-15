@@ -87,5 +87,4 @@ const AllDealsPage = () => {
     </div>
   );
 };
-
-export default AllDealsPage;
+export default AllDealsPage; 
