@@ -1,19 +1,34 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 const AllDealsPage = () => {
+  const router = useRouter();
   const [deals, setDeals] = useState([]);
   const [salesNames, setSalesNames] = useState([]);
   const [filterBy, setFilterBy] = useState('');
   const [loading, setLoading] = useState(true);
+  const [authChecked, setAuthChecked] = useState(false); // For redirect check
 
-  // Fetch deals and sales names
+  // Redirect unauthenticated users
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+    } else {
+      setAuthChecked(true);
+    }
+  }, []);
+
+  // Fetch deals and names only after auth check
+  useEffect(() => {
+    if (!authChecked) return;
+
     fetchDeals();
     fetchSalesNames();
-  }, [filterBy]);
+  }, [filterBy, authChecked]);
 
   const fetchDeals = async () => {
     try {
@@ -28,9 +43,9 @@ const AllDealsPage = () => {
 
   const fetchSalesNames = async () => {
     try {
-      const res = await axios.get('/api/deals'); // Get all deals
+      const res = await axios.get('/api/deals');
       const names = [...new Set(res.data.map((deal) => deal.addedBy))];
-      setSalesNames(names.sort()); // Optional: sort names alphabetically
+      setSalesNames(names.sort());
     } catch (error) {
       console.error('Failed to fetch sales names:', error);
     }
@@ -38,8 +53,10 @@ const AllDealsPage = () => {
 
   const handleFilterChange = (e) => {
     setFilterBy(e.target.value);
+    setLoading(true);
   };
 
+  if (!authChecked) return <p>Checking authentication...</p>;
   if (loading) return <p>Loading deals...</p>;
 
   return (
@@ -78,7 +95,15 @@ const AllDealsPage = () => {
               <td>{deal.pocEmail}</td>
               <td>{deal.stage}</td>
               <td>{deal.addedBy}</td>
-              <td>{deal.linkedinUrl}</td>
+              <td>
+                {deal.linkedinUrl ? (
+                  <a href={deal.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                    View Profile
+                  </a>
+                ) : (
+                  'N/A'
+                )}
+              </td>
               <td>{new Date(deal.createdAt).toLocaleString()}</td>
               <td>{new Date(deal.updatedAt).toLocaleString()}</td>
               <td>{deal.comments}</td>
@@ -89,4 +114,5 @@ const AllDealsPage = () => {
     </div>
   );
 };
-export default AllDealsPage; 
+
+export default AllDealsPage;
