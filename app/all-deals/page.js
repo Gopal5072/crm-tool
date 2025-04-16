@@ -1,34 +1,27 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const AllDealsPage = () => {
-  const router = useRouter();
   const [deals, setDeals] = useState([]);
   const [salesNames, setSalesNames] = useState([]);
   const [filterBy, setFilterBy] = useState('');
   const [loading, setLoading] = useState(true);
-  const [authChecked, setAuthChecked] = useState(false); // For redirect check
+  const router = useRouter();
 
-  // Redirect unauthenticated users
+  // ✅ Check for founder role
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login');
-    } else {
-      setAuthChecked(true);
+    const role = localStorage.getItem('role');
+    if (role !== 'Founder') {
+      router.push('/login'); // Redirect if not founder
+      return;
     }
-  }, []);
-
-  // Fetch deals and names only after auth check
-  useEffect(() => {
-    if (!authChecked) return;
 
     fetchDeals();
     fetchSalesNames();
-  }, [filterBy, authChecked]);
+  }, [filterBy]);
 
   const fetchDeals = async () => {
     try {
@@ -53,10 +46,8 @@ const AllDealsPage = () => {
 
   const handleFilterChange = (e) => {
     setFilterBy(e.target.value);
-    setLoading(true);
   };
 
-  if (!authChecked) return <p>Checking authentication...</p>;
   if (loading) return <p>Loading deals...</p>;
 
   return (
@@ -95,15 +86,7 @@ const AllDealsPage = () => {
               <td>{deal.pocEmail}</td>
               <td>{deal.stage}</td>
               <td>{deal.addedBy}</td>
-              <td>
-                {deal.linkedinUrl ? (
-                  <a href={deal.linkedinUrl} target="_blank" rel="noopener noreferrer">
-                    View Profile
-                  </a>
-                ) : (
-                  'N/A'
-                )}
-              </td>
+              <td>{deal.linkedinUrl}</td>
               <td>{new Date(deal.createdAt).toLocaleString()}</td>
               <td>{new Date(deal.updatedAt).toLocaleString()}</td>
               <td>{deal.comments}</td>

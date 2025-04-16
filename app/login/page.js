@@ -20,9 +20,12 @@ const LoginPage = () => {
       const res = await axios.post('/api/auth/login', formData);
       const { token, role, fullName } = res.data;
 
+      // ✅ Store all essential data in localStorage
       localStorage.setItem('token', token);
-      localStorage.setItem('fullName', fullName); // ✅ Store full name
+      localStorage.setItem('fullName', fullName);
+      localStorage.setItem('role', role); // ✅ Store role for access control
 
+      // ✅ Redirect based on role
       if (role === 'Founder') {
         router.push('/all-deals');
       } else {
