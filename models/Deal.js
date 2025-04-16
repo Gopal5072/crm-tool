@@ -8,6 +8,7 @@ const dealSchema = new mongoose.Schema(
     stage: String,
     addedBy: String,
     comments: String,
+    linkedinUrl: String,
   },
   {
     timestamps: true, // 👈 This auto-manages `createdAt` and `updatedAt`

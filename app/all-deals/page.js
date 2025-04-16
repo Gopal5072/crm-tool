@@ -64,6 +64,7 @@ const AllDealsPage = () => {
             <th>Email</th>
             <th>Stage</th>
             <th>Added By</th>
+            <th>LinkedIn URL</th>
             <th>Created</th>
             <th>Updated</th>
             <th>Comments</th>
@@ -77,6 +78,7 @@ const AllDealsPage = () => {
               <td>{deal.pocEmail}</td>
               <td>{deal.stage}</td>
               <td>{deal.addedBy}</td>
+              <td>{deal.linkedinUrl}</td>
               <td>{new Date(deal.createdAt).toLocaleString()}</td>
               <td>{new Date(deal.updatedAt).toLocaleString()}</td>
               <td>{deal.comments}</td>

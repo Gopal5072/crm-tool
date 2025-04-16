@@ -85,6 +85,7 @@ const MyDealsPage = () => {
               <th>POC Email</th>
               <th>Stage</th>
               <th>Added By</th>
+              <th>LinkedIn</th>
               <th>Created At</th>
               <th>Updated At</th>
               <th>Comments</th>
@@ -162,6 +163,30 @@ const MyDealsPage = () => {
                     deal.addedBy
                   )}
                 </td>
+                <td>
+  {editingDealId === deal._id ? (
+    <input
+      type="url"
+      name="linkedinUrl"
+      value={editedDealData.linkedinUrl || ""}
+      onChange={handleEditChange}
+    />
+  ) : (
+    deal.linkedinUrl ? (
+      <a
+        href={deal.linkedinUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {deal.linkedinUrl}
+      </a>
+    ) : (
+      "-"
+    )
+  )}
+</td>
+
+
                 <td>
   {editingDealId === deal._id ? (
     <input

@@ -11,6 +11,7 @@ const DealForm = () => {
     pocEmail: "",
     stage: "Mail sent",
     comments: "",
+    linkedinUrl: "",
   });
 
   const [addedBy, setAddedBy] = useState("");
@@ -111,6 +112,17 @@ const DealForm = () => {
           </select>
         </div>
 
+        <div>
+          <label htmlFor="linkedinUrl">LinkedIn Profile URL:</label>
+          <input
+            type="url"
+            id="linkedinUrl"
+            name="linkedinUrl"
+            value={formData.linkedinUrl}
+            onChange={handleChange}
+  />
+        </div>
+        
         <div>
           <label htmlFor="comments">Comments:</label>
           <textarea

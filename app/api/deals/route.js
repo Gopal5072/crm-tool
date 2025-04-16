@@ -27,7 +27,7 @@ export async function GET(req) {
 export async function POST(req) {
   try {
     await connectToDatabase();
-    const { companyName, pocName, pocEmail, stage, addedBy, comments } = await req.json();
+    const { companyName, pocName, pocEmail, stage, addedBy, linkedinUrl, comments } = await req.json();
 
     const newDeal = new Deal({
       companyName,
@@ -35,6 +35,7 @@ export async function POST(req) {
       pocEmail,
       stage,
       addedBy,
+      linkedinUrl,
       comments,
       createdAt: new Date(),
       updatedAt: new Date(),
