@@ -101,7 +101,6 @@ const DealForm = () => {
         name="pocMobile"
         value={formData.pocMobile}
         onChange={handleChange}
-        required
             />
           </div>
 
