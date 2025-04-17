@@ -89,7 +89,6 @@ const DealForm = () => {
             name="pocEmail"
             value={formData.pocEmail}
             onChange={handleChange}
-            required
           />
         </div>
 
