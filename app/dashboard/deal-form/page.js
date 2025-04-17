@@ -149,6 +149,9 @@ const DealForm = () => {
         <div>
           <button type="submit">Create Deal</button>
           <button onClick={handleShowMyDeals}>Show My Deals</button>
+          <button type="button" onClick={() => router.push("/all-deals")}>
+    Show All Deals
+  </button>
         </div>
       </form>
 

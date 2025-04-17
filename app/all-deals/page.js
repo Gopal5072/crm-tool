@@ -14,7 +14,7 @@ const AllDealsPage = () => {
   // ✅ Check for founder role
   useEffect(() => {
     const role = localStorage.getItem('role');
-    if (role !== 'Founder') {
+    if (!role) {
       router.push('/login'); // Redirect if not founder
       return;
     }
