@@ -27,12 +27,13 @@ export async function GET(req) {
 export async function POST(req) {
   try {
     await connectToDatabase();
-    const { companyName, pocName, pocEmail, stage, addedBy, linkedinUrl, comments } = await req.json();
+    const { companyName, pocName, pocEmail, pocMobile, stage, addedBy, linkedinUrl, comments } = await req.json();
 
     const newDeal = new Deal({
       companyName,
       pocName,
       pocEmail,
+      pocMobile,
       stage,
       addedBy,
       linkedinUrl,

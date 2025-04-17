@@ -5,6 +5,7 @@ const dealSchema = new mongoose.Schema(
     companyName: String,
     pocName: String,
     pocEmail: String,
+    pocMobile: String,
     stage: String,
     addedBy: String,
     comments: String,

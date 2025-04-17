@@ -9,6 +9,7 @@ const DealForm = () => {
     companyName: "",
     pocName: "",
     pocEmail: "",
+    pocMobile: "",
     stage: "Mail sent",
     comments: "",
     linkedinUrl: "",
@@ -91,6 +92,18 @@ const DealForm = () => {
             required
           />
         </div>
+
+        <div>
+      <label htmlFor="pocMobile">POC Mobile Number:</label>
+        <input
+        type="tel"
+        id="pocMobile"
+        name="pocMobile"
+        value={formData.pocMobile}
+        onChange={handleChange}
+        required
+            />
+          </div>
 
         <div>
           <label htmlFor="stage">Stage:</label>

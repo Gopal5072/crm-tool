@@ -83,6 +83,7 @@ const MyDealsPage = () => {
               <th>Company Name</th>
               <th>POC Name</th>
               <th>POC Email</th>
+              <th>POC Mobile</th>
               <th>Stage</th>
               <th>Added By</th>
               <th>LinkedIn</th>
@@ -131,6 +132,19 @@ const MyDealsPage = () => {
                     deal.pocEmail
                   )}
                 </td>
+                <td>
+  {editingDealId === deal._id ? (
+    <input
+      type="tel"
+      name="pocMobile"
+      value={editedDealData.pocMobile || ""}
+      onChange={handleEditChange}
+    />
+  ) : (
+    deal.pocMobile || "-"
+  )}
+</td>
+
                 <td>
                   {editingDealId === deal._id ? (
                     <select

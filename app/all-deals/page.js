@@ -70,6 +70,7 @@ const AllDealsPage = () => {
             <th>Company</th>
             <th>POC</th>
             <th>Email</th>
+            <th>POC Mobile</th>
             <th>Stage</th>
             <th>Added By</th>
             <th>LinkedIn URL</th>
@@ -84,6 +85,7 @@ const AllDealsPage = () => {
               <td>{deal.companyName}</td>
               <td>{deal.pocName}</td>
               <td>{deal.pocEmail}</td>
+              <td>{deal.pocMobile}</td>
               <td>{deal.stage}</td>
               <td>{deal.addedBy}</td>
               <td>{deal.linkedinUrl}</td>
