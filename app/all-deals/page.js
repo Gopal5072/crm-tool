@@ -11,14 +11,9 @@ const AllDealsPage = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // ✅ Check for founder role
   useEffect(() => {
     const role = localStorage.getItem('role');
-    if (!role) {
-      router.push('/login'); // Redirect if not founder
-      return;
-    }
-
+    if (!role) router.push('/login');
     fetchDeals();
     fetchSalesNames();
   }, [filterBy]);
@@ -53,14 +48,11 @@ const AllDealsPage = () => {
   return (
     <div style={{ padding: 30 }}>
       <h1>All Deals (Founder View)</h1>
-
       <label>Filter by Sales Member:</label>
       <select value={filterBy} onChange={handleFilterChange}>
         <option value="">All</option>
         {salesNames.map((name) => (
-          <option key={name} value={name}>
-            {name}
-          </option>
+          <option key={name} value={name}>{name}</option>
         ))}
       </select>
 
@@ -68,12 +60,13 @@ const AllDealsPage = () => {
         <thead>
           <tr>
             <th>Company</th>
-            <th>POC</th>
-            <th>Email</th>
-            <th>POC Mobile</th>
+            <th>POC Name(s)</th>
+            <th>POC Email(s)</th>
+            <th>POC Mobile(s)</th>
+            <th>POC LinkedIn(s)</th>
             <th>Stage</th>
             <th>Added By</th>
-            <th>LinkedIn URL</th>
+            <th>LinkedIn</th>
             <th>Created</th>
             <th>Updated</th>
             <th>Comments</th>
@@ -83,12 +76,69 @@ const AllDealsPage = () => {
           {deals.map((deal) => (
             <tr key={deal._id}>
               <td>{deal.companyName}</td>
-              <td>{deal.pocName}</td>
-              <td>{deal.pocEmail}</td>
-              <td>{deal.pocMobile}</td>
+
+              {/* POC Names */}
+              <td>
+                <ul>
+                  {deal.pocs && deal.pocs.length > 0 ? (
+                    deal.pocs.map((poc, i) => <li key={i}>{poc.name}</li>)
+                  ) : (
+                    <li>{deal.pocName || '-'}</li>
+                  )}
+                </ul>
+              </td>
+
+              {/* POC Emails */}
+              <td>
+                <ul>
+                  {deal.pocs && deal.pocs.length > 0 ? (
+                    deal.pocs.map((poc, i) => <li key={i}>{poc.email}</li>)
+                  ) : (
+                    <li>{deal.pocEmail || '-'}</li>
+                  )}
+                </ul>
+              </td>
+
+              {/* POC Mobiles */}
+              <td>
+                <ul>
+                  {deal.pocs && deal.pocs.length > 0 ? (
+                    deal.pocs.map((poc, i) => <li key={i}>{poc.mobile}</li>)
+                  ) : (
+                    <li>{deal.pocMobile || '-'}</li>
+                  )}
+                </ul>
+              </td>
+
+              {/* POC LinkedIn URLs */}
+              <td>
+  <ul>
+    {deal.pocs?.length > 0 ? (
+      deal.pocs.map((poc, i) => (
+        <li key={i}>
+          {poc.linkedinUrl ? (
+            <a href={poc.linkedinUrl} target="_blank" rel="noopener noreferrer">
+              {poc.linkedinUrl}
+            </a>
+          ) : '-'}
+        </li>
+      ))
+    ) : deal.linkedinUrl ? (
+      <li>
+        <a href={deal.linkedinUrl} target="_blank" rel="noopener noreferrer">
+          {deal.linkedinUrl}
+        </a>
+      </li>
+    ) : (
+      <li>-</li>
+    )}
+  </ul>
+</td>
+
+
+
               <td>{deal.stage}</td>
               <td>{deal.addedBy}</td>
-              <td>{deal.linkedinUrl}</td>
               <td>{new Date(deal.createdAt).toLocaleString()}</td>
               <td>{new Date(deal.updatedAt).toLocaleString()}</td>
               <td>{deal.comments}</td>

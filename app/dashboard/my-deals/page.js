@@ -80,15 +80,15 @@ const MyDealsPage = () => {
         <table border="1" cellPadding="10">
           <thead>
             <tr>
-              <th>Company Name</th>
-              <th>POC Name</th>
-              <th>POC Email</th>
-              <th>POC Mobile</th>
+              <th>Company</th>
+              <th>POC Name(s)</th>
+              <th>POC Email(s)</th>
+              <th>POC Mobile(s)</th>
+              <th>POC LinkedIn(s)</th>
               <th>Stage</th>
               <th>Added By</th>
-              <th>LinkedIn</th>
-              <th>Created At</th>
-              <th>Updated At</th>
+              <th>Created</th>
+              <th>Updated</th>
               <th>Comments</th>
               <th>Actions</th>
             </tr>
@@ -96,159 +96,76 @@ const MyDealsPage = () => {
           <tbody>
             {deals.map((deal) => (
               <tr key={deal._id}>
-                <td>
-                  {editingDealId === deal._id ? (
-                    <input
-                      type="text"
-                      name="companyName"
-                      value={editedDealData.companyName}
-                      onChange={handleEditChange}
-                    />
-                  ) : (
-                    deal.companyName
-                  )}
-                </td>
-                <td>
-                  {editingDealId === deal._id ? (
-                    <input
-                      type="text"
-                      name="pocName"
-                      value={editedDealData.pocName}
-                      onChange={handleEditChange}
-                    />
-                  ) : (
-                    deal.pocName
-                  )}
-                </td>
-                <td>
-                  {editingDealId === deal._id ? (
-                    <input
-                      type="email"
-                      name="pocEmail"
-                      value={editedDealData.pocEmail}
-                      onChange={handleEditChange}
-                    />
-                  ) : (
-                    deal.pocEmail
-                  )}
-                </td>
-                <td>
-  {editingDealId === deal._id ? (
-    <input
-      type="tel"
-      name="pocMobile"
-      value={editedDealData.pocMobile || ""}
-      onChange={handleEditChange}
-    />
-  ) : (
-    deal.pocMobile || "-"
-  )}
-</td>
+                <td>{deal.companyName}</td>
 
+                {/* POC Names */}
                 <td>
-                  {editingDealId === deal._id ? (
-                    <select
-                      name="stage"
-                      value={editedDealData.stage}
-                      onChange={handleEditChange}
-                    >
-                      <option value="Mail sent">Mail sent</option>
-                      <option value="Proposal sent">Proposal sent</option>
-                      <option value="Meeting done">Meeting done</option>
-                      <option value="Meeting scheduled">Meeting scheduled</option>
-                      <option value="Sampling stage">Sampling stage</option>
-                      <option value="Closed Won">Closed Won</option>
-                      <option value="Closed Lost">Closed Lost</option>
-                      <option value="DNP">DNP</option>
-                    </select>
-                  ) : (
-                    deal.stage
-                  )}
+                  <ul>
+                    {deal.pocs && deal.pocs.length > 0 ? (
+                      deal.pocs.map((poc, i) => <li key={i}>{poc.name}</li>)
+                    ) : (
+                      <li>{deal.pocName || '-'}</li>
+                    )}
+                  </ul>
                 </td>
+
+                {/* POC Emails */}
                 <td>
-                  {editingDealId === deal._id ? (
-                    <input
-                      type="text"
-                      name="addedBy"
-                      value={editedDealData.addedBy}
-                      readOnly
-                    />
-                  ) : (
-                    deal.addedBy
-                  )}
+                  <ul>
+                    {deal.pocs && deal.pocs.length > 0 ? (
+                      deal.pocs.map((poc, i) => <li key={i}>{poc.email}</li>)
+                    ) : (
+                      <li>{deal.pocEmail || '-'}</li>
+                    )}
+                  </ul>
                 </td>
+
+                {/* POC Mobiles */}
                 <td>
-  {editingDealId === deal._id ? (
-    <input
-      type="url"
-      name="linkedinUrl"
-      value={editedDealData.linkedinUrl || ""}
-      onChange={handleEditChange}
-    />
-  ) : (
-    deal.linkedinUrl ? (
-      <a
-        href={deal.linkedinUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {deal.linkedinUrl}
-      </a>
+                  <ul>
+                    {deal.pocs && deal.pocs.length > 0 ? (
+                      deal.pocs.map((poc, i) => <li key={i}>{poc.mobile}</li>)
+                    ) : (
+                      <li>{deal.pocMobile || '-'}</li>
+                    )}
+                  </ul>
+                </td>
+
+                {/* POC LinkedIn URLs */}
+                <td>
+  <ul>
+    {deal.pocs?.length > 0 ? (
+      deal.pocs.map((poc, i) => (
+        <li key={i}>
+          {poc.linkedinUrl ? (
+            <a href={poc.linkedinUrl} target="_blank" rel="noopener noreferrer">
+              {poc.linkedinUrl}
+            </a>
+          ) : '-'}
+        </li>
+      ))
+    ) : deal.linkedinUrl ? (
+      <li>
+        <a href={deal.linkedinUrl} target="_blank" rel="noopener noreferrer">
+          {deal.linkedinUrl}
+        </a>
+      </li>
     ) : (
-      "-"
-    )
-  )}
+      <li>-</li>
+    )}
+  </ul>
 </td>
 
 
+
+                <td>{deal.stage}</td>
+                <td>{deal.addedBy}</td>
+                <td>{new Date(deal.createdAt).toLocaleString()}</td>
+                <td>{new Date(deal.updatedAt).toLocaleString()}</td>
+                <td>{deal.comments}</td>
                 <td>
-  {editingDealId === deal._id ? (
-    <input
-      type="text"
-      name="createdAt"
-      value={new Date(editedDealData.createdAt).toLocaleString()}
-      readOnly
-    />
-  ) : (
-    new Date(deal.createdAt).toLocaleString()
-  )}
-</td>
-<td>
-  {editingDealId === deal._id ? (
-    <input
-      type="text"
-      name="updatedAt"
-      value={new Date(editedDealData.updatedAt).toLocaleString()}
-      readOnly
-    />
-  ) : (
-    new Date(deal.updatedAt).toLocaleString()
-  )}
-</td>
-                <td>
-                  {editingDealId === deal._id ? (
-                    <input
-                      type="text"
-                      name="comments"
-                      value={editedDealData.comments}
-                      onChange={handleEditChange}
-                    />
-                  ) : (
-                    deal.comments
-                  )}
-                </td>
-                <td>
-                  {editingDealId === deal._id ? (
-                    <>
-                      <button onClick={() => handleSaveEdit(deal._id)}>Save</button>
-                      <button onClick={() => setEditingDealId(null)}>Cancel</button>
-                    </>
-                  ) : (
-                    <>
-                      <button onClick={() => handleEditClick(deal)}>Edit</button>
-                      <button onClick={() => handleDeleteDeal(deal._id)}>Delete</button>
-                    </>
-                  )}
+                  <button onClick={() => handleEditClick(deal)}>Edit</button>
+                  <button onClick={() => handleDeleteDeal(deal._id)}>Delete</button>
                 </td>
               </tr>
             ))}

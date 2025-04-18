@@ -1,18 +1,21 @@
 import mongoose from "mongoose";
+const pocSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  mobile: String,
+  linkedinUrl: { type: String, required: false }, // Added LinkedIn URL to POC
+});
 
 const dealSchema = new mongoose.Schema(
   {
     companyName: String,
-    pocName: String,
-    pocEmail: String,
-    pocMobile: String,
+    pocs: [pocSchema], // Array of POCs, each with LinkedIn URL
     stage: String,
     addedBy: String,
     comments: String,
-    linkedinUrl: String,
   },
   {
-    timestamps: true, // 👈 This auto-manages `createdAt` and `updatedAt`
+    timestamps: true,
   }
 );
 
