@@ -1,16 +1,16 @@
 import { connectToDatabase } from '../../../../lib/db';
 import Deal from '../../../../models/Deal';
 import { NextResponse } from 'next/server';
-import mongoose from 'mongoose';
 
 // PUT — Update deal
-export async function PUT(req, { params }) {
+export async function PUT(req, context) {
   try {
     await connectToDatabase();
-    const { id } = params;
+
+    const { id } = await context.params; // 👈 this silences the warning
+
     const updatedFields = await req.json();
 
-    // Avoid updating immutable fields
     delete updatedFields._id;
     delete updatedFields.createdAt;
 
@@ -27,10 +27,11 @@ export async function PUT(req, { params }) {
 }
 
 // DELETE — Delete deal
-export async function DELETE(req, { params }) {
+export async function DELETE(req, context) {
   try {
     await connectToDatabase();
-    const { id } = params;
+
+    const { id } = await context.params; // 👈 this silences the warning
 
     const deletedDeal = await Deal.findByIdAndDelete(id);
 
