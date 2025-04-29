@@ -66,7 +66,6 @@ const AllDealsPage = () => {
             <th>POC LinkedIn(s)</th>
             <th>Stage</th>
             <th>Added By</th>
-            <th>LinkedIn</th>
             <th>Created</th>
             <th>Updated</th>
             <th>Comments</th>
@@ -134,9 +133,6 @@ const AllDealsPage = () => {
     )}
   </ul>
 </td>
-
-
-
               <td>{deal.stage}</td>
               <td>{deal.addedBy}</td>
               <td>{new Date(deal.createdAt).toLocaleString()}</td>
